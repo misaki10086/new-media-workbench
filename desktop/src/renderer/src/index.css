@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --app-bg: #f5f5f6;
+  --app-panel: #ffffff;
+  --app-panel-hover: #f0f0f2;
+  --app-border: #e4e4e9;
+  --app-fg: #1b1b1f;
+  --app-fg-muted: #6f6f7a;
+  --app-accent: #2f6bdb;
+  --app-accent-fg: #ffffff;
+  --app-accent-soft: rgba(47, 107, 219, 0.1);
+  --app-success: #1a7f37;
+  --app-success-soft: rgba(26, 127, 55, 0.12);
+  --app-warning: #9a6700;
+  --app-warning-soft: rgba(154, 103, 0, 0.12);
+  --app-danger: #d1242f;
+  --app-danger-soft: rgba(209, 36, 47, 0.1);
+  --app-idle: #8b8b94;
+  --app-idle-soft: rgba(139, 139, 148, 0.12);
+}
+
+.dark {
+  --app-bg: #131316;
+  --app-panel: #1a1b1f;
+  --app-panel-hover: #232429;
+  --app-border: #2a2b31;
+  --app-fg: #e7e7ea;
+  --app-fg-muted: #9a9aa5;
+  --app-accent: #5b8def;
+  --app-accent-fg: #ffffff;
+  --app-accent-soft: rgba(91, 141, 239, 0.16);
+  --app-success: #3fb950;
+  --app-success-soft: rgba(63, 185, 80, 0.15);
+  --app-warning: #d29922;
+  --app-warning-soft: rgba(210, 153, 34, 0.15);
+  --app-danger: #f85149;
+  --app-danger-soft: rgba(248, 81, 73, 0.14);
+  --app-idle: #6e6e78;
+  --app-idle-soft: rgba(110, 110, 120, 0.16);
+}
+
+@theme inline {
+  --color-bg: var(--app-bg);
+  --color-panel: var(--app-panel);
+  --color-panel-hover: var(--app-panel-hover);
+  --color-line: var(--app-border);
+  --color-fg: var(--app-fg);
+  --color-fg-muted: var(--app-fg-muted);
+  --color-accent: var(--app-accent);
+  --color-accent-fg: var(--app-accent-fg);
+  --color-accent-soft: var(--app-accent-soft);
+  --color-success: var(--app-success);
+  --color-success-soft: var(--app-success-soft);
+  --color-warning: var(--app-warning);
+  --color-warning-soft: var(--app-warning-soft);
+  --color-danger: var(--app-danger);
+  --color-danger-soft: var(--app-danger-soft);
+  --color-idle: var(--app-idle);
+  --color-idle-soft: var(--app-idle-soft);
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-bg font-sans text-[13px] text-fg antialiased;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  input,
+  textarea {
+    user-select: text;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--app-border);
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--app-idle);
+    background-clip: content-box;
+    border: 2px solid transparent;
+  }
+}
+
+@layer components {
+  .app-drag {
+    -webkit-app-region: drag;
+  }
+
+  .app-no-drag {
+    -webkit-app-region: no-drag;
+  }
+}

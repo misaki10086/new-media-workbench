@@ -1,0 +1,33 @@
+{
+  "name": "new-media-content-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "description": "新媒体内容工作台 MVP",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev": "concurrently -n server,client,worker -c cyan,green,magenta \"npm run dev --workspace server\" \"npm run dev --workspace client\" \"npm run worker --workspace server\"",
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "build": "npm run build --workspace server && npm run build --workspace client",
+    "typecheck": "npm run typecheck --workspace server && npm run typecheck --workspace client",
+    "test": "npm run test --workspace server && npm run test --workspace client",
+    "start": "npm run start --workspace server",
+    "worker": "npm run worker --workspace server",
+    "db:init": "npm run db:init --workspace server",
+    "db:migrate": "npm run db:migrate --workspace server",
+    "db:migrate:undo": "npm run db:migrate:undo --workspace server",
+    "db:seed": "npm run db:seed --workspace server",
+    "db:seed:undo": "npm run db:seed:undo --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

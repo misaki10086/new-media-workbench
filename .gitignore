@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.npm-cache/
+
+# Environment files (keep examples tracked)
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Build and coverage output
+dist/
+build/
+coverage/
+.vite/
+
+# Runtime data
+uploads/
+server/uploads/
+*.log
+logs/
+*.pid
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Test and tool caches
+.nyc_output/
+.eslintcache
+*.tsbuildinfo
+
+# Local database artifacts
+*.sqlite
+*.sqlite3
+
+# Desktop release artifacts
+desktop/release/
+
+# App icon is generated during packaging, but keep the source icon tracked
+!desktop/build/
+!desktop/build/icon.png

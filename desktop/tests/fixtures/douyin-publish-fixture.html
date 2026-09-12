@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>抖音创作者中心（本地发布流程测试页）</title>
+  </head>
+  <body>
+    <!-- 场景 A：登录墙 -->
+    <div id="stage-loginwall" style="display:none">
+      <h1>创作者登录</h1>
+      <span>扫码登录</span><span>验证码登录</span>
+      <div>请使用抖音扫码进入创作者中心</div>
+    </div>
+
+    <!-- 场景 B：安全验证 -->
+    <div id="stage-security" style="display:none">
+      <h1>安全验证</h1>
+      <span>拖动滑块完成验证</span><span>请完成验证</span>
+    </div>
+
+    <!-- 场景 C：正常发布流程 -->
+    <div id="stage-normal" style="display:none">
+      <nav id="side-nav">内容管理 数据中心 收益中心 互动管理</nav>
+      <h1>发布视频</h1>
+      <label for="video-input">选择视频</label>
+      <input type="file" id="video-input" accept="video/*" />
+      <textarea id="desc-box" placeholder="作品简介"></textarea>
+      <div id="title-box" contenteditable="true" data-placeholder="填写标题"></div>
+      <label for="cover-input">封面</label>
+      <input type="file" id="cover-input" accept="image/*" style="display:none" />
+      <div id="cover-status"></div>
+      <div id="upload-status">等待上传</div>
+      <button id="publish-btn" disabled>发布</button>
+      <div id="publish-result"></div>
+      <div id="upload-failed" style="display:none">上传失败</div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const state = params.get('state') || 'normal';
+      const neverComplete = params.get('never') === '1';
+      const failUpload = params.get('fail') === '1';
+      const noResult = params.get('noResult') === '1';
+
+      if (state === 'loginwall') {
+        document.getElementById('stage-loginwall').style.display = 'block';
+        document.getElementById('stage-security').remove();
+        document.getElementById('stage-normal').remove();
+      } else if (state === 'security') {
+        document.getElementById('stage-security').style.display = 'block';
+        document.getElementById('stage-loginwall').remove();
+        document.getElementById('stage-normal').remove();
+      } else {
+        document.getElementById('stage-normal').style.display = 'block';
+        document.getElementById('stage-loginwall').remove();
+        document.getElementById('stage-security').remove();
+        const uploadStatus = document.getElementById('upload-status');
+        const publishBtn = document.getElementById('publish-btn');
+        const uploadFailed = document.getElementById('upload-failed');
+        document.getElementById('video-input').addEventListener('change', () => {
+          if (failUpload) {
+            uploadFailed.style.display = 'block';
+            return;
+          }
+          uploadStatus.innerText = '上传中 0%';
+          if (neverComplete) {
+            // 永不完成：用于验证 UPLOAD_TIMEOUT 分支
+            return;
+          }
+          let percent = 0;
+          const timer = setInterval(() => {
+            percent += 25;
+            uploadStatus.innerText = '上传中 ' + percent + '%';
+            if (percent >= 100) {
+              clearInterval(timer);
+              uploadStatus.innerText = '上传完成';
+              publishBtn.disabled = false;
+            }
+          }, 800);
+        });
+        document.getElementById('cover-input').addEventListener('change', () => {
+          document.getElementById('cover-status').innerText = '封面已设置';
+        });
+        publishBtn.addEventListener('click', () => {
+          if (!noResult) {
+            document.getElementById('publish-result').innerText = '发布成功';
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

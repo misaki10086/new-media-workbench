@@ -1,0 +1,43 @@
+appId: com.personal.newmediaworkbench
+productName: NewMediaWorkbench
+copyright: 个人本地使用
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - out/**
+  - package.json
+
+# 原生模块与 Playwright 不能进 asar
+asar: true
+asarUnpack:
+  - "**/node_modules/better-sqlite3/**"
+  - "**/node_modules/playwright/**"
+  - "**/node_modules/playwright-core/**"
+
+# Drizzle 迁移文件随包分发（db.ts 会从 resources/migrations 读取）
+extraResources:
+  - from: src/main/database/migrations
+    to: migrations
+
+# better-sqlite3 已有匹配当前 Electron ABI 的预编译产物（开发环境实测可加载），跳过重编译
+npmRebuild: false
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: build/icon.png
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  shortcutName: 新媒体工作台
+
+portable:
+  artifactName: NewMediaWorkbench-portable-${version}.exe

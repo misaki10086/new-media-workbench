@@ -1,0 +1,46 @@
+{
+  "name": "media-workbench-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "worker": "tsx watch src/workers/publishWorker.ts",
+    "start": "node dist/index.js",
+    "start:worker": "node dist/workers/publishWorker.js",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "vitest run",
+    "db:init": "tsx src/database/cli.ts init",
+    "db:migrate": "tsx src/database/cli.ts up",
+    "db:migrate:undo": "tsx src/database/cli.ts down",
+    "db:seed": "tsx src/database/cli.ts seed",
+    "db:seed:undo": "tsx src/database/cli.ts unseed"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "bullmq": "^5.58.5",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "ioredis": "^5.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.4",
+    "openai": "^5.19.1",
+    "sequelize": "^6.37.7",
+    "umzug": "^3.8.2",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.3.0",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.1.4",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
